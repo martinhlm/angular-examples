@@ -13,7 +13,7 @@ import { AppBar, NoteCard, NoteCreator, ColorPicker } from './app/ui'
         AppBar,
         NoteCard,
         NoteCreator,
-        ColorPicker
+        ColorPicker,
         Notes
     ],
     imports: [BrowserModule, FormsModule],
