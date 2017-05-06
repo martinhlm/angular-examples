@@ -17,7 +17,8 @@ import { Component, Output, EventEmitter } from '@angular/core'
         }
     `],
     template: `
-        <div class="note-creator shadow-2">
+        <div class="note-creator shadow-2" 
+            [ngStyle]="{'background-color': newNote.color}">
           <form class="row" (ngSubmit)="onCreateNote()">
             <input
               type="text"
@@ -36,6 +37,10 @@ import { Component, Output, EventEmitter } from '@angular/core'
               class="col-xs-10"
             >
             <div class="actions col-xs-12 row between-xs" *ngIf="fullForm">
+              <div class="col-xs-3">
+                <color-picker [colors]="colors"
+                    (selected)="onColorSelected($event)"></color-picker>
+              </div>
               <button
                 type="submit"
                 class="btn-light"
@@ -53,30 +58,37 @@ export class NoteCreator {
     private fullForm: boolean = false
     private newNote = {
         title: '',
-        value: ''
+        value: '',
+        color: 'white'
     }
+    private colors: string[] = ['#B19CD9', '#FF6961', '#77DD77', '#AEC6C7', '#2EA6C7']
 
     @Output() createNote = new EventEmitter();
 
     private onCreateNote() {
-        const{ title, value } = this.newNote
+        const{ title, value, color } = this.newNote
 
         if (title && value) {
-            this.createNote.next({title, value})
+            this.createNote.next({title, value, color})
         }
 
         this.reset()
-        this.toggle(false)
+        this.toggle()
     }
 
     private reset() {
         this.newNote = {
             title: '',
-            value: ''
+            value: '',
+            color: 'white'
         }
     }
 
     private toggle(value: boolean) {
         this.fullForm = value
+    }
+
+    private onColorSelected(color: string) {
+        this.newNote.color = color
     }
 }

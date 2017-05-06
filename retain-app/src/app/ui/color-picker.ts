@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { Component, Input, Output, EventEmitter } from '@angular/core'
 
 @Component({
     selector: 'color-picker'
@@ -34,11 +34,30 @@ import { Component } from '@angular/core'
     `],
     template: `
         <div class="color-selector">
-          <i class="material-icons icon">color_lens</i>
-          <div class="selector row center-xs">
-            <div class="color"></div>
+          <i class="material-icons icon"
+            (click)="showSelector(true)">color_lens</i>
+          <div class="selector row center-xs" *ngIf="isSelectorVisible">
+            <div class="color" 
+            *ngFor="let color of colors" 
+            (click)="selectColor(color)"
+            [ngStyle]="{'background-color': color}"></div>
           </div>
         </div>
     `
 })
-export class ColorPicker {}
+export class ColorPicker {
+
+    private isSelectorVisible: boolean = false
+
+    @Input() colors: string[] = []
+    @Output() selected = new EventEmitter()
+
+    private selectColor(color: string) {
+        this.showSelector(false)
+        this.selected.next(color)
+    }
+
+    private showSelector(value: boolean) {
+        this.isSelectorVisible = value
+    }
+}
