@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core'
 
 @Component({
-    selector: 'color-picker'
+    selector: 'color-picker',
     styles: [`
         .color-selector {
           position: relative;

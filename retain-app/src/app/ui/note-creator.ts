@@ -73,7 +73,7 @@ export class NoteCreator {
         }
 
         this.reset()
-        this.toggle()
+        this.toggle(false)
     }
 
     private reset() {
